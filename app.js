@@ -4,15 +4,14 @@ class UserDatabase {
         this.users = JSON.parse(localStorage.getItem('users')) || [];
         this.currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
         
-        // Add demo user if not exists
+        // Add demo user
         if (!this.users.find(u => u.email === 'demo@example.com')) {
             this.users.push({
                 id: 1,
                 name: 'Demo User',
                 email: 'demo@example.com',
                 password: this.hashPassword('demo123'),
-                createdAt: new Date().toISOString(),
-                plan: 'free'
+                createdAt: new Date().toISOString()
             });
             localStorage.setItem('users', JSON.stringify(this.users));
         }
@@ -29,13 +28,12 @@ class UserDatabase {
             name: userData.name,
             email: userData.email,
             password: this.hashPassword(userData.password),
-            createdAt: new Date().toISOString(),
-            plan: 'free'
+            createdAt: new Date().toISOString()
         };
 
         this.users.push(newUser);
         localStorage.setItem('users', JSON.stringify(this.users));
-        return { success: true, message: 'Registration successful! Please login.' };
+        return { success: true, message: 'Registration successful!' };
     }
 
     login(email, password) {
@@ -52,12 +50,11 @@ class UserDatabase {
         this.currentUser = {
             id: user.id,
             name: user.name,
-            email: user.email,
-            plan: user.plan
+            email: user.email
         };
         
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-        return { success: true, message: `Welcome back, ${user.name}!` };
+        return { success: true, message: `Welcome, ${user.name}!` };
     }
 
     logout() {
@@ -70,296 +67,443 @@ class UserDatabase {
     }
 
     hashPassword(password) {
-        let hash = 0;
-        for (let i = 0; i < password.length; i++) {
-            const char = password.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
+       (password) {
+        let hash let hash = 0;
+        for = 0;
+        for (let i =  (let i = 00; i; i < password.length; i++) {
+            const < password.length; i++) {
+            char = password const char = password.charCode.charCodeAt(iAt(i);
+            hash =);
+            hash = ((hash ((hash <<  << 5)5) - hash - hash) + char;
+) + char;
+            hash            hash = hash & hash;
+ = hash & hash;
+               }
         }
-        return hash.toString();
+        return hash return hash.toString();
+.toString();
+    }
     }
 }
 
-// Initialize database
-const db = new UserDatabase();
+const db =}
 
-// DOM Elements
-const modal = document.getElementById('authModal');
-const loginForm = document.getElementById('loginForm');
-const registerForm = document.getElementById('registerForm');
-const modalTitle = document.getElementById('modalTitle');
-const userProfile = document.getElementById('userProfile');
+const new UserDatabase db = new UserDatabase();
+
+();
+
+// DOM// DOM Elements
+ Elements
+const modalconst modal = document.getElementById(' = document.getElementById('authModalauthModal');
+const');
+const loginForm loginForm = document = document.getElementById('loginForm');
+const.getElementById('loginForm');
+const registerForm registerForm = document = document.getElementById.getElementById('registerForm('registerForm');
+const');
+const modalTitle = document.getElementById(' modalTitle = document.getElementById('modalTitle');
+constmodalTitle');
+const userProfile = document userProfile = document.getElementById('userProfile.getElementById('');
+constuserProfile userNameDisplay');
 const userNameDisplay = document.getElementById('userNameDisplay');
-const loginBtn = document.querySelector('.login-btn');
+const login = document.getElementById('userNameDisplay');
+const loginBtn = document.querySelectorBtn = document.querySelector('.login('.login-btn');
+const register-btn');
 const registerBtn = document.querySelector('.register-btn');
-const pages = document.querySelectorAll('.page');
-const navLinks = document.querySelectorAll('.nav-links a');
-const toast = document.getElementById('toast');
-const toastMessage = document.getElementById('toastMessage');
+Btn = document.querySelector('.register-btn');
+const pages = document.querySelectorAllconst pages = document('.page.querySelectorAll('.page');
+const');
+const navLinks = document navLinks.querySelectorAll = document.querySelectorAll('.nav-center('.nav a');
+const-center a');
+const toast = toast = document.getElementById document.getElementById('toast');
+('toast');
+const toastconst toastMessage =Message = document.getElementById document.getElementById('toastMessage('toastMessage');
 
-// Check login status on load
-document.addEventListener('DOMContentLoaded', () => {
-    updateAuthUI();
+//');
+
+// Check login status
+document.addEventListener Check login status
+('DOMdocument.addEventListener('DOMContentLoadedContentLoaded', () => {
+', () => {
+    updateAuthUI    updateAuthUI();
     
-    // Handle hash navigation
-    if (window.location.hash) {
-        const targetId = window.location.hash.substring(1);
+   ();
+    
+    if if (window.location.hash (window.location.hash) {
+) {
+        const targetId        const targetId = window = window.location.hash.location.hash.substring(1);
+        switchPage(targetId);
+.substring(1);
         switchPage(targetId);
     }
-
-    createParticles();
+    }
 });
 
-// Update auth UI based on login status
+function updateAuth});
+
 function updateAuthUI() {
-    if (db.isLoggedIn()) {
-        loginBtn.classList.add('hidden');
-        registerBtn.classList.add('hidden');
-        userProfile.classList.remove('hidden');
-        userNameDisplay.textContent = db.currentUser.name;
+    if (UI() {
+    if (db.isdb.isLoggedInLoggedIn()) {
+()) {
+        login        loginBtn.classListBtn.classList.add('.add('hidden');
+hidden');
+        register        registerBtn.classListBtn.classList.add('.add('hidden');
+        userProfile.classListhidden');
+        userProfile.classList.remove('.remove('hidden');
+        userNameDisplay.textContent =hidden');
+        userNameDisplay.textContent = db.current db.currentUser.name;
+   User.name;
     } else {
-        loginBtn.classList.remove('hidden');
-        registerBtn.classList.remove('hidden');
-        userProfile.classList.add('hidden');
+        } else {
+        loginBtn.classList.remove loginBtn('hidden.classList.remove('hidden');
+       ');
+        registerBtn registerBtn.classList.remove('hidden.classList.remove('hidden');
+       ');
+        userProfile userProfile.classList.add('hidden.classList.add('hidden');
+   ');
     }
 }
 
-// Modal functions
-function openModal(type) {
-    modal.classList.add('show');
+ }
+}
+
+//// Modal functions Modal functions
+function openModal
+function openModal(type)(type) {
+    {
+    modal modal.classList.add('.classList.add('show');
+    document.body.style.overflow = 'hidden';
+show');
     document.body.style.overflow = 'hidden';
     
-    if (type === 'login') {
-        modalTitle.textContent = 'Login';
-        loginForm.classList.add('active-form');
-        registerForm.classList.remove('active-form');
-    } else {
-        modalTitle.textContent = 'Register';
-        registerForm.classList.add('active-form');
-        loginForm.classList.remove('active-form');
+    if (type ===    
+    if (type === 'login 'login') {
+') {
+        modal        modalTitle.textTitle.textContent = 'LoginContent =';
+        loginForm 'Login';
+       .classList.add loginForm.classList.add('active('active-form');
+-form');
+        register        registerForm.classListForm.classList.remove('.remove('active-formactive-form');
+    } else');
+    {
+        } else {
+        modalTitle modalTitle.textContent = '.textContent = 'Register';
+        registerRegister';
+       Form.classList.add(' registerForm.classList.add('active-formactive-form');
+       ');
+        loginForm loginForm.classList.remove.classList.remove('active('active-form');
     }
 }
 
-function closeModal() {
-    modal.classList.remove('show');
-    document.body.style.overflow = 'auto';
+-form');
+    }
 }
 
-function switchModal(type) {
-    if (type === 'login') {
-        modalTitle.textContent = 'Login';
-        loginForm.classList.add('active-form');
-        registerForm.classList.remove('active-form');
+functionfunction closeModal closeModal() {
+() {
+    modal    modal.classList.remove.classList.remove('show');
+   ('show document.body');
+    document.body.style..style.overflow =overflow = 'auto 'auto';
+}
+
+';
+}
+
+function switchfunction switchModal(typeModal(type) {
+    if) {
+    if (type (type === === ' 'login') {
+       login') modalTitle {
+        modal.textContent = 'Title.textContent = 'Login';
+Login';
+        loginForm.classList        loginForm.classList.add('active-form.add('');
+       active-form');
+        registerForm registerForm.classList.remove.classList.remove('active('active-form');
+    }-form');
     } else {
-        modalTitle.textContent = 'Register';
-        registerForm.classList.add('active-form');
-        loginForm.classList.remove('active-form');
+ else {
+        modal        modalTitle.textTitle.textContent =Content = 'Register 'Register';
+        registerForm';
+        registerForm.classList.classList.add.add('active-form');
+('active-form');
+        loginForm.classList        loginForm.classList.remove('active-form.remove('active');
+    }
+}
+
+-form');
     }
 }
 
 // Handle Login
 function handleLogin(event) {
+    event.preventDefault// Handle Login
+function handleLogin(event) {
     event.preventDefault();
     
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-
-    if (!email || !password) {
-        showToast('Please fill in all fields!', 'error');
-        return;
-    }
-
-    const result = db.login(email, password);
+();
     
-    if (result.success) {
-        showToast(result.message, 'success');
+    const email =    const document.getElementById('login email = document.getElementById('loginEmail').value;
+Email').value;
+    const    const password = document.getElementById password =('login document.getElementById('loginPassword').Password').value;
+
+    constvalue;
+
+ result =    const result = db.login db.login(email, password(email, password);
+    
+);
+    
+       if (result.success) {
+        showToast(result if (result.success) {
+        showToast(result.message);
+        close.message);
         closeModal();
-        updateAuthUI();
-        document.getElementById('loginEmail').value = '';
-        document.getElementById('loginPassword').value = '';
+Modal();
+        update        updateAuthUI();
+       AuthUI();
+        document.getElementById document.getElementById('login('loginEmail').value = '';
+        document.getElementByIdEmail').value = '';
+        document.getElementById('login('loginPassword').value = '';
+    } else {
+        showToast(result.message, 'Password').value = '';
     } else {
         showToast(result.message, 'error');
     }
 }
 
 // Handle Register
+function handleRegistererror');
+    }
+}
+
+// Handle Register
 function handleRegister(event) {
-    event.preventDefault();
+   (event) {
+    event event.preventDefault();
     
-    const name = document.getElementById('regName').value;
-    const email = document.getElementById('regEmail').value;
-    const password = document.getElementById('regPassword').value;
-    const confirmPassword = document.getElementById('regConfirmPassword').value;
-
-    if (!name || !email || !password || !confirmPassword) {
-        showToast('Please fill in all fields!', 'error');
-        return;
-    }
-
-    if (password !== confirmPassword) {
-        showToast('Passwords do not match!', 'error');
-        return;
-    }
-
-    if (password.length < 6) {
-        showToast('Password must be at least 6 characters!', 'error');
-        return;
-    }
-
-    const result = db.register({ name, email, password });
+.preventDefault();
     
-    if (result.success) {
-        showToast(result.message, 'success');
-        switchModal('login');
-        document.getElementById('regName').value = '';
-        document.getElementById('regEmail').value = '';
-        document.getElementById('regPassword').value = '';
-        document.getElementById('regConfirmPassword').value = '';
-    } else {
-        showToast(result.message, 'error');
+    const    const name = document.getElementById name = document.getElementById('reg('regName').value;
+    constName').value;
+    const email = email = document.getElementById(' document.getElementById('regEmail').regEmail').value;
+    constvalue;
+    const password password = document.getElementById('reg = document.getElementById('regPassword').Password').value;
+    constvalue;
+    const confirmPassword confirmPassword = document = document.getElementById('regConfirm.getElementById('regConfirmPassword').value;
+
+Password').value;
+
+    if    if ( (password !== confirmPassword)password !== confirm {
+       Password) {
+        showToast showToast('Pass('Passwords dowords do not match!', 'error not match!',');
+        'error');
+        return;
+ return;
+    }
+
+    }
+
+    if    if (password.length (password.length < 6) {
+ < 6) {
+        showToast('Password must        showToast('Password must be at be at least  least 66 characters characters!', 'error!', 'error');
+       ');
+        return;
+    }
+
+ return;
+    }
+
+       const result const result = = db.register db.register({ name({ name, email, email, password, password });
+    
+ });
+    
+    if (result    if (result.success) {
+       .success) {
+        showToast showToast(result.message(result.message);
+       );
+        switchModal switchModal('login');
+       ('login');
+        document.getElementById('reg document.getElementById('regName').Name').value =value = '';
+        '';
+        document.getElementById document.getElementById('regEmail').('regEmail').valuevalue = '';
+        = '';
+        document.getElementById document.getElementById('reg('regPassword').value =Password').value = '';
+        '';
+        document.getElementById document.getElementById('reg('regConfirmPasswordConfirmPassword').value').value = '';
+ = '';
+    }    } else {
+ else {
+        show        showToast(resultToast(result.message,.message, ' 'error');
+   error');
     }
 }
 
-// Logout
-function logout() {
-    db.logout();
+ }
+}
+
+// Log// Logoutout
+
+function logoutfunction logout() {
+() {
+    db.logout    db.logout();
     updateAuthUI();
-    showToast('Logged out successfully!', 'success');
+    showToast('();
+    updateAuthUI();
+    showToast('Logged outLogged out successfully! successfully!');
 }
 
-// Switch pages
-function switchPage(pageId) {
-    pages.forEach(page => {
-        page.classList.remove('active-page');
-        if (page.id === pageId) {
-            page.classList.add('active-page');
+');
+}
+
+// Switch// Switch pages
+ pages
+function switchfunction switchPage(pagePage(pageIdId)) {
+    {
+    pages.forEach pages.forEach(page =>(page => {
+        page.classList {
+        page.classList.remove('.remove('active-pageactive-page');
+       ');
+        if ( if (page.idpage.id === pageId) === pageId) {
+            {
+            page.classList page.classList.add('.add('active-pageactive-page');
         }
     });
 
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${pageId}`) {
-            link.classList.add('active');
+   ');
+        }
+    });
+
+    navLinks navLinks.forEach(link =>.forEach(link => {
+        {
+        link.classList.remove(' link.classList.removeactive');
+('active');
+        if        if (link.getAttribute('href') === `#${pageId}`) {
+ (link.getAttribute('href') === `#${pageId}`) {
+            link            link.classList.add('active');
+       .classList.add('active');
         }
     });
 }
 
-// Handle purchase
-function handlePurchase(plan) {
-    if (!db.isLoggedIn()) {
-        showToast('Please login to purchase!', 'error');
-        openModal('login');
-        return;
+ }
+    });
+}
+
+// Handle// Handle purchase purchase/download/download
+function handlePurchase
+function handlePurchase(plan(plan) {
+) {
+    if (!db    if (!db.isLogged.isLoggedIn()) {
+       In()) showToast {
+        showToast('Please('Please login to login to purchase! purchase!',', 'error');
+        open 'error');
+        openModal('Modal('login');
+login');
+        return        return;
+   ;
     }
-    showToast(`Thank you for your interest in ${plan} plan!`, 'success');
+    showToast }
+    showToast(`Selected ${plan} plan!`);
 }
 
-// Handle download
+(`Selected ${plan} plan!`);
+}
+
 function handleDownload(version) {
-    if (!db.isLoggedIn()) {
-        showToast('Please login to download!', 'error');
+   function handleDownload(version) {
+    if (! if (!db.isLoggedIn()) {
+db.isLoggedIn()) {
+        show        showToast('Toast('Please loginPlease login to download!', 'error');
+        to download!', ' openModal('login');
+        return;
+    }
+error');
         openModal('login');
         return;
     }
-    showToast(`Starting download for ${version} version...`, 'success');
+    showToast(`    showDownloading ${version} versionToast(`Downloading ${version} version...`);
 }
 
-// Forgot password
-function forgotPassword() {
-    showToast('Demo: Password reset link would be sent to your email!', 'info');
+//...`);
 }
 
-// Toast notification
-function showToast(message, type = 'success') {
-    toastMessage.textContent = message;
-    toast.className = `toast show ${type}`;
+// Toast
+function show Toast
+function showToast(message, typeToast(message, type = ' = 'success') {
+   success') {
+    toastMessage toastMessage.textContent.textContent = message = message;
+    toast.class;
+    toast.className =Name = 'toast ' show';
+toast show';
     
+       
     setTimeout(() => {
+ setTimeout(() => {
         toast.classList.remove('show');
+    }, 3000        toast.classList.remove('show');
     }, 3000);
 }
 
-// Create particles
-function createParticles() {
-    const particlesContainer = document.querySelector('.hero-particles');
-    if (!particlesContainer) return;
-
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDuration = Math.random() * 3 + 2 + 's';
-        particle.style.animationDelay = Math.random() * 2 + 's';
-        particlesContainer.appendChild(particle);
-    }
+// Navigation
+nav);
 }
 
-// Add particles CSS
-const style = document.createElement('style');
-style.textContent = `
-    .hero-particles {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        z-index: 1;
-    }
-
-    .particle {
-        position: absolute;
-        width: 2px;
-        height: 2px;
-        background: var(--gold);
-        border-radius: 50%;
-        opacity: 0.3;
-        animation: floatParticle linear infinite;
-    }
-
-    @keyframes floatParticle {
-        0% {
-            transform: translateY(100vh) translateX(0);
-            opacity: 0;
-        }
-        10% {
-            opacity: 0.3;
-        }
-        90% {
-            opacity: 0.3;
-        }
-        100% {
-            transform: translateY(-100px) translateX(100px);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Navigation click handlers
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href').substring(1);
-        switchPage(targetId);
+// Navigation
+navLinks.forEachLinks.forEach(link(link => {
+    link => {
+    link.addEventListener('.addEventListener('click',click', (e) (e) => {
+        => {
+        e.preventDefault e.preventDefault();
+       ();
+        const targetId = const targetId = link.get link.getAttribute('Attribute('href').href').substring(1substring(1);
+       );
+        switchPage switchPage(targetId);
+   (targetId);
     });
 });
 
-// Close modal with Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('show')) {
+ });
+});
+
+// Close// Close modal with modal with Escape key
+document Escape key
+document.addEventListener('.addEventListener('keydownkeydown', (e)', (e) => {
+ => {
+    if    if (e.key (e.key === 'Escape' === 'Escape' && modal.classList.contains('show && modal.classList.contains('show')) {
+')) {
         closeModal();
+        closeModal();
+    }
     }
 });
 
-// Click outside modal to close
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        closeModal();
+//});
+
+// Click outside modal Click outside
+modal modal
+modal.addEventListener('.addEventListener('clickclick', (e', (e) =>) => {
+    {
+    if ( if (e.target === modale.target) {
+ === modal) {
+        close        closeModal();
+Modal();
+    }
     }
 });
 
-// Make functions globally available
+//});
+
+// Menu icon click ( Menu iconyou click (you can add can add menu menu functionality later functionality later)
+document)
+document.querySelector.querySelector('.('.menu-icon').addmenu-icon').addEventListener('click', () =>EventListener('click', () => {
+    {
+    showToast('Menu coming showToast('Menu coming soon!');
+});
+
+// Global functions
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.sw soon!');
+});
+
+// Global functions
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.switchModal = switchModal;
@@ -367,5 +511,9 @@ window.handleLogin = handleLogin;
 window.handleRegister = handleRegister;
 window.logout = logout;
 window.handlePurchase = handlePurchase;
+window.handleDownloaditchModal = switchModal;
+window.handleLogin = handleLogin;
+window.handleRegister = handleRegister;
+window.logout = logout;
+window.handlePurchase = handlePurchase;
 window.handleDownload = handleDownload;
-window.forgotPassword = forgotPassword;

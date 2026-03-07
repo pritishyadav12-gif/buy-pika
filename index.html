@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoldenAuth - Secure Login</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-crown" style="color: #FFD700;"></i>
+                    <span>Golden<span style="color: #FFD700;">Auth</span></span>
+                </div>
+                <div class="nav-links">
+                    <a href="#home" class="active">Home</a>
+                    <a href="#features">Features</a>
+                    <a href="#about">About</a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <div class="hero-section">
+                <h1>Welcome to <span style="color: #FFD700;">Golden</span> Security</h1>
+                <p>Experience premium authentication with our golden standard protection</p>
+            </div>
+
+            <!-- Auth Container -->
+            <div class="auth-container">
+                <!-- Login Form -->
+                <div class="form-container login-form active-form">
+                    <h2><i class="fas fa-lock" style="color: #FFD700;"></i> Login</h2>
+                    <form id="loginForm">
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="loginEmail" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-key"></i>
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                        </div>
+                        <div class="form-options">
+                            <label>
+                                <input type="checkbox"> Remember me
+                            </label>
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="auth-btn">Login</button>
+                    </form>
+                    <p class="switch-form">
+                        Don't have an account? <a href="#" onclick="toggleForms()">Register here</a>
+                    </p>
+                </div>
+
+                <!-- Register Form -->
+                <div class="form-container register-form">
+                    <h2><i class="fas fa-user-plus" style="color: #FFD700;"></i> Register</h2>
+                    <form id="registerForm">
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="regName" placeholder="Full Name" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="regEmail" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-key"></i>
+                            <input type="password" id="regPassword" placeholder="Password" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-key"></i>
+                            <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
+                        </div>
+                        <div class="form-options">
+                            <label>
+                                <input type="checkbox" required> I agree to the Terms & Conditions
+                            </label>
+                        </div>
+                        <button type="submit" class="auth-btn">Register</button>
+                    </form>
+                    <p class="switch-form">
+                        Already have an account? <a href="#" onclick="toggleForms()">Login here</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="features-section" id="features">
+                <h2>Premium Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt" style="color: #FFD700;"></i>
+                        <h3>Secure Authentication</h3>
+                        <p>Bank-level encryption for your data</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-bolt" style="color: #FFD700;"></i>
+                        <h3>Fast & Reliable</h3>
+                        <p>Lightning-fast login experience</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-mobile-alt" style="color: #FFD700;"></i>
+                        <h3>Mobile Friendly</h3>
+                        <p>Access from any device</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard (Initially Hidden) -->
+            <div class="dashboard hidden" id="dashboard">
+                <div class="dashboard-header">
+                    <i class="fas fa-check-circle" style="color: #FFD700; font-size: 3rem;"></i>
+                    <h2>Welcome to Your Dashboard</h2>
+                    <p>You have successfully logged in!</p>
+                </div>
+                <div class="dashboard-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-users" style="color: #FFD700;"></i>
+                            <h3>Profile</h3>
+                            <p id="userName">User Name</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-envelope" style="color: #FFD700;"></i>
+                            <h3>Email</h3>
+                            <p id="userEmail">user@example.com</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-calendar" style="color: #FFD700;"></i>
+                            <h3>Member Since</h3>
+                            <p id="memberSince">Just now</p>
+                        </div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 GoldenAuth. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

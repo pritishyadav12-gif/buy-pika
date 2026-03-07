@@ -84,59 +84,74 @@ class UserDatabase {
 const db = new UserDatabase();
 
 // DOM Elements
-const authContainer = document.getElementById('authContainer');
-const mainWebsite = document.getElementById('mainWebsite');
+const modal = document.getElementById('authModal');
 const loginForm = document.getElementById('loginForm');
 const registerForm = document.getElementById('registerForm');
-const toggleBtns = document.querySelectorAll('.toggle-btn');
+const modalTitle = document.getElementById('modalTitle');
 const userProfile = document.getElementById('userProfile');
 const userNameDisplay = document.getElementById('userNameDisplay');
+const loginBtn = document.querySelector('.login-btn');
+const registerBtn = document.querySelector('.register-btn');
 const pages = document.querySelectorAll('.page');
 const navLinks = document.querySelectorAll('.nav-links a');
 const toast = document.getElementById('toast');
 const toastMessage = document.getElementById('toastMessage');
 
-// Check if user is already logged in
+// Check login status on load
 document.addEventListener('DOMContentLoaded', () => {
-    if (db.isLoggedIn()) {
-        showMainWebsite();
-        updateUserInfo();
+    updateAuthUI();
+    
+    // Handle hash navigation
+    if (window.location.hash) {
+        const targetId = window.location.hash.substring(1);
+        switchPage(targetId);
     }
+
     createParticles();
 });
 
-// Show/Hide Main Website
-function showMainWebsite() {
-    authContainer.style.display = 'none';
-    mainWebsite.classList.add('visible');
-    updateUserInfo();
-}
-
-function showAuth() {
-    authContainer.style.display = 'flex';
-    mainWebsite.classList.remove('visible');
-}
-
-// Update user info in navbar
-function updateUserInfo() {
+// Update auth UI based on login status
+function updateAuthUI() {
     if (db.isLoggedIn()) {
+        loginBtn.classList.add('hidden');
+        registerBtn.classList.add('hidden');
+        userProfile.classList.remove('hidden');
         userNameDisplay.textContent = db.currentUser.name;
+    } else {
+        loginBtn.classList.remove('hidden');
+        registerBtn.classList.remove('hidden');
+        userProfile.classList.add('hidden');
     }
 }
 
-// Toggle Auth Forms
-function showAuthForm(type) {
-    toggleBtns.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.textContent.toLowerCase() === type) {
-            btn.classList.add('active');
-        }
-    });
-
+// Modal functions
+function openModal(type) {
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    
     if (type === 'login') {
+        modalTitle.textContent = 'Login';
         loginForm.classList.add('active-form');
         registerForm.classList.remove('active-form');
     } else {
+        modalTitle.textContent = 'Register';
+        registerForm.classList.add('active-form');
+        loginForm.classList.remove('active-form');
+    }
+}
+
+function closeModal() {
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+}
+
+function switchModal(type) {
+    if (type === 'login') {
+        modalTitle.textContent = 'Login';
+        loginForm.classList.add('active-form');
+        registerForm.classList.remove('active-form');
+    } else {
+        modalTitle.textContent = 'Register';
         registerForm.classList.add('active-form');
         loginForm.classList.remove('active-form');
     }
@@ -158,7 +173,8 @@ function handleLogin(event) {
     
     if (result.success) {
         showToast(result.message, 'success');
-        showMainWebsite();
+        closeModal();
+        updateAuthUI();
         document.getElementById('loginEmail').value = '';
         document.getElementById('loginPassword').value = '';
     } else {
@@ -194,7 +210,7 @@ function handleRegister(event) {
     
     if (result.success) {
         showToast(result.message, 'success');
-        showAuthForm('login');
+        switchModal('login');
         document.getElementById('regName').value = '';
         document.getElementById('regEmail').value = '';
         document.getElementById('regPassword').value = '';
@@ -207,7 +223,7 @@ function handleRegister(event) {
 // Logout
 function logout() {
     db.logout();
-    showAuth();
+    updateAuthUI();
     showToast('Logged out successfully!', 'success');
 }
 
@@ -230,11 +246,21 @@ function switchPage(pageId) {
 
 // Handle purchase
 function handlePurchase(plan) {
-    showToast(`Thank you for your interest in ${plan} plan! Payment gateway coming soon.`, 'success');
+    if (!db.isLoggedIn()) {
+        showToast('Please login to purchase!', 'error');
+        openModal('login');
+        return;
+    }
+    showToast(`Thank you for your interest in ${plan} plan!`, 'success');
 }
 
 // Handle download
 function handleDownload(version) {
+    if (!db.isLoggedIn()) {
+        showToast('Please login to download!', 'error');
+        openModal('login');
+        return;
+    }
     showToast(`Starting download for ${version} version...`, 'success');
 }
 
@@ -258,7 +284,7 @@ function createParticles() {
     const particlesContainer = document.querySelector('.hero-particles');
     if (!particlesContainer) return;
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 20; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.style.left = Math.random() * 100 + '%';
@@ -321,13 +347,22 @@ navLinks.forEach(link => {
 
 // Close modal with Escape key
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && authContainer.style.display === 'flex') {
-        // Don't close, it's the main auth screen
+    if (e.key === 'Escape' && modal.classList.contains('show')) {
+        closeModal();
+    }
+});
+
+// Click outside modal to close
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModal();
     }
 });
 
 // Make functions globally available
-window.showAuthForm = showAuthForm;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.switchModal = switchModal;
 window.handleLogin = handleLogin;
 window.handleRegister = handleRegister;
 window.logout = logout;

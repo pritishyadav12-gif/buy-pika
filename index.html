@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIKA - Undetectable Minecraft Client</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-bolt" style="color: var(--gold);"></i>
+                PIKA
+                <span class="logo-badge">BETA</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#home" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="#webgui"><i class="fas fa-globe"></i> WebGui</a>
+                <a href="#download"><i class="fas fa-download"></i> Download</a>
+            </div>
+
+            <div class="nav-auth">
+                <button class="auth-btn login-btn" onclick="openModal('login')">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button class="auth-btn register-btn" onclick="openModal('register')">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+                <div class="user-profile hidden" id="userProfile">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="userNameDisplay"></span>
+                    <button onclick="logout()" class="logout-icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Login</h2>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active-form" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox">
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <a href="#" onclick="forgotPassword()">Forgot password?</a>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <p class="switch-text">
+                    Don't have an account? <a href="#" onclick="switchModal('register')">Register</a>
+                </p>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="regName" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="regPassword" placeholder="Password" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox">
+                        <input type="checkbox" required> I agree to the <a href="#">Terms</a>
+                    </label>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+                <p class="switch-text">
+                    Already have an account? <a href="#" onclick="switchModal('login')">Login</a>
+                </p>
+            </form>
+
+            <!-- Demo Credentials -->
+            <div class="demo-credentials">
+                <p><i class="fas fa-info-circle"></i> Demo: demo@example.com / demo123</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pages -->
+    
+    <!-- Home Page -->
+    <section id="home" class="page active-page">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-content">
+                <h1 class="glitch">UNDETECTABLE MINECRAFT CLIENT</h1>
+                <p class="hero-subtitle">Experience the most advanced bypass techniques with PIKA</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="openModal('register')">
+                        <i class="fas fa-rocket"></i> Get Started
+                    </button>
+                    <button class="btn-secondary" onclick="document.querySelector('.features').scrollIntoView({behavior: 'smooth'})">
+                        <i class="fas fa-info-circle"></i> Learn More
+                    </button>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Active Users</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">99.9%</span>
+                        <span class="stat-label">Undetected</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Support</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-particles" id="particles"></div>
+        </div>
+
+        <div class="container">
+            <!-- Main Question -->
+            <div class="section-title">
+                <h2>Why Should I choose <span class="gold-text">Pika?</span></h2>
+                <div class="title-underline"></div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="features">
+                <!-- 1st -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="feature-number">01</div>
+                    </div>
+                    <h3>Undetected</h3>
+                    <p>Pika use the latest and most secure methods in their modules. Being detected isn't on our list of concerns.</p>
+                    <div class="feature-badge">BYPASS 100%</div>
+                </div>
+
+                <!-- 2nd -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-desktop"></i>
+                        <div class="feature-number">02</div>
+                    </div>
+                    <h3>Screenshare Bypass</h3>
+                    <p>Pika guaranteed screenshare proof when following our screenshare guide. Full manual screenshare included.</p>
+                    <div class="feature-badge">SCREENSHARE PROOF</div>
+                </div>
+
+                <!-- 3rd -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cubes"></i>
+                        <div class="feature-number">03</div>
+                    </div>
+                    <h3>Multi Version</h3>
+                    <p>Multi version pika supports version 1.16.5-1.21.11. Wide compatibility for all your needs.</p>
+                    <div class="feature-badge">1.16.5 - 1.21.11</div>
+                </div>
+
+                <!-- 4th -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                        <div class="feature-number">04</div>
+                    </div>
+                    <h3>WebGUI</h3>
+                    <p>Pika have webgui instead of normal clickgui. Access your settings from anywhere.</p>
+                    <div class="feature-badge">CLOUD BASED</div>
+                </div>
+            </div>
+
+            <!-- Pricing Section -->
+            <div class="pricing-section">
+                <div class="section-title">
+                    <h2>Choose Your <span class="gold-text">Plan</span></h2>
+                    <div class="title-underline"></div>
+                </div>
+
+                <div class="pricing">
+                    <!-- Pika Monthly -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Pika Monthly</h3>
+                            <div class="price">
+                                <span class="currency">€</span>
+                                <span class="amount">5</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Bypasses full manual screenshare including scanners</li>
+                            <li><i class="fas fa-check-circle"></i> Fileless execution & Injection</li>
+                            <li><i class="fas fa-check-circle"></i> supports all minecraft versions 1.16.5-1.21.11</li>
+                            <li><i class="fas fa-check-circle"></i> New instance bypass</li>
+                            <li><i class="fas fa-check-circle"></i> WebGui (nevergetcaught.xyz)</li>
+                            <li><i class="fas fa-check-circle"></i> Mainly for sword, pot and prob for mace</li>
+                        </ul>
+                        <button class="pricing-btn" onclick="handlePurchase('monthly')">
+                            <i class="fas fa-crown"></i> Purchase Monthly
+                        </button>
+                    </div>
+
+                    <!-- Pika Lifetime -->
+                    <div class="pricing-card featured">
+                        <div class="popular-badge">MOST POPULAR</div>
+                        <div class="pricing-header">
+                            <h3>Pika Lifetime</h3>
+                            <div class="price">
+                                <span class="currency">€</span>
+                                <span class="amount">15</span>
+                                <span class="period">/lifetime</span>
+                            </div>
+                        </div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Bypasses full manual screenshare including scanners</li>
+                            <li><i class="fas fa-check-circle"></i> Fileless execution & Injection</li>
+                            <li><i class="fas fa-check-circle"></i> supports all minecraft versions 1.8.9-1.21.11</li>
+                            <li><i class="fas fa-check-circle"></i> New instance bypass</li>
+                            <li><i class="fas fa-check-circle"></i> WebGui (nevergetcaught.xyz)</li>
+                            <li><i class="fas fa-check-circle"></i> Mainly for sword, pot and prob for mace</li>
+                        </ul>
+                        <button class="pricing-btn featured-btn" onclick="handlePurchase('lifetime')">
+                            <i class="fas fa-crown"></i> Purchase Lifetime
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WebGui Page -->
+    <section id="webgui" class="page">
+        <div class="webgui-hero">
+            <h1>WebGui <span class="gold-text">Dashboard</span></h1>
+            <p>nevergetcaught.xyz - Your Control Panel in the Cloud</p>
+        </div>
+        
+        <div class="container">
+            <div class="webgui-showcase">
+                <div class="webgui-preview">
+                    <div class="browser-bar">
+                        <div class="browser-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="browser-url">https://nevergetcaught.xyz/dashboard</div>
+                    </div>
+                    <div class="webgui-dashboard">
+                        <div class="dashboard-sidebar">
+                            <div class="sidebar-item active"><i class="fas fa-home"></i></div>
+                            <div class="sidebar-item"><i class="fas fa-sliders-h"></i></div>
+                            <div class="sidebar-item"><i class="fas fa-chart-line"></i></div>
+                            <div class="sidebar-item"><i class="fas fa-cog"></i></div>
+                        </div>
+                        <div class="dashboard-main">
+                            <div class="dashboard-header">
+                                <h3>Module Controls</h3>
+                                <div class="status online">Online</div>
+                            </div>
+                            <div class="module-grid">
+                                <div class="module-card">
+                                    <span>KillAura</span>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="module-card">
+                                    <span>Velocity</span>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="module-card">
+                                    <span>Scaffold</span>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="module-card">
+                                    <span>ESP</span>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="webgui-features">
+                    <div class="webgui-feature-card">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Cloud Sync</h3>
+                        <p>Your settings sync automatically across all devices</p>
+                    </div>
+                    <div class="webgui-feature-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile Ready</h3>
+                        <p>Access your WebGui from any device with internet</p>
+                    </div>
+                    <div class="webgui-feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Secure Connection</h3>
+                        <p>End-to-end encryption for all your data</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Page -->
+    <section id="download" class="page">
+        <div class="download-hero">
+            <h1>Download <span class="gold-text">PIKA</span></h1>
+            <p>Choose your version and start bypassing</p>
+        </div>
+
+        <div class="container">
+            <div class="download-options">
+                <!-- Monthly Card -->
+                <div class="download-card">
+                    <div class="card-content">
+                        <div class="card-header">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h3>Monthly</h3>
+                        </div>
+                        <div class="price-tag">
+                            <span class="currency">€</span>
+                            <span class="amount">5</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Full Screenshare Bypass</li>
+                            <li><i class="fas fa-check"></i> Fileless Injection</li>
+                            <li><i class="fas fa-check"></i> Version 1.16.5-1.21.11</li>
+                            <li><i class="fas fa-check"></i> WebGui Access</li>
+                            <li><i class="fas fa-check"></i> 24/7 Support</li>
+                        </ul>
+                        <button class="download-btn" onclick="handleDownload('monthly')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lifetime Card -->
+                <div class="download-card featured">
+                    <div class="popular-tag">BEST VALUE</div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <i class="fas fa-infinity"></i>
+                            <h3>Lifetime</h3>
+                        </div>
+                        <div class="price-tag">
+                            <span class="currency">€</span>
+                            <span class="amount">15</span>
+                            <span class="period">/once</span>
+                        </div>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Everything in Monthly</li>
+                            <li><i class="fas fa-check"></i> Version 1.8.9-1.21.11</li>
+                            <li><i class="fas fa-check"></i> Lifetime Updates</li>
+                            <li><i class="fas fa-check"></i> Priority Support</li>
+                            <li><i class="fas fa-check"></i> Early Access Features</li>
+                        </ul>
+                        <button class="download-btn featured-btn" onclick="handleDownload('lifetime')">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="system-requirements">
+                <h3><i class="fas fa-info-circle"></i> System Requirements</h3>
+                <div class="requirements-grid">
+                    <div class="req-item">
+                        <i class="fas fa-windows"></i>
+                        <span>Windows 10/11</span>
+                    </div>
+                    <div class="req-item">
+                        <i class="fas fa-memory"></i>
+                        <span>4GB RAM</span>
+                    </div>
+                    <div class="req-item">
+                        <i class="fas fa-microchip"></i>
+                        <span>Intel i3 or better</span>
+                    </div>
+                    <div class="req-item">
+                        <i class="fas fa-hdd"></i>
+                        <span>500MB Storage</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-info-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

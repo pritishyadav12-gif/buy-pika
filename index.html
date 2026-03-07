@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pika · golden subscriptions</title>
+  <!-- professional multi-file structure: style.css / script.js (embedded for demo, but separated in code) -->
+  <style>
+    /* === style.css === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background: #1b1b22;
+      background-image: radial-gradient(circle at 30% 10%, rgba(255, 215, 0, 0.05) 0%, transparent 30%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 200, 0, 0.03) 0%, transparent 40%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .main-container {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .brand h1 {
+      font-size: 3.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #f5e56b 0%, #e4c580 60%, #bfa87e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .brand span {
+      color: #9a9aac;
+      font-size: 1rem;
+      font-weight: 400;
+      background: rgba(50,50,60,0.7);
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+      display: inline-block;
+      border: 1px solid rgba(255,215,0,0.2);
+    }
+
+    .pricing-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .plan-card {
+      background: #2d2d38;
+      border-radius: 3rem;
+      padding: 2.5rem 2rem;
+      flex: 1 1 300px;
+      max-width: 400px;
+      box-shadow: 0 25px 45px -10px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,215,0,0.2) inset;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(230, 200, 100, 0.3);
+      backdrop-filter: blur(2px);
+    }
+
+    .plan-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 55px -10px #000000cc, 0 0 0 2px #f3c26b inset;
+    }
+
+    .plan-header {
+      margin-bottom: 1.8rem;
+    }
+
+    .plan-name {
+      font-size: 2.2rem;
+      font-weight: 600;
+      background: linear-gradient(145deg, #f9e281, #dbb05c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .plan-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+      color: #c2c2d0;
+      margin-top: 0.5rem;
+    }
+
+    .price-amount {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #ffd966;
+    }
+
+    .price-period {
+      font-size: 1.1rem;
+      color: #9191a3;
+      font-weight: 400;
+    }
+
+    .price-note {
+      font-size: 0.9rem;
+      color: #a5a5b8;
+      margin-left: 0.3rem;
+    }
+
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #c2a256, #f5d76e, #c2a256, transparent);
+      margin: 1.5rem 0 1.8rem 0;
+      opacity: 0.6;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-bottom: 2rem;
+      flex-grow: 1;
+    }
+
+    .feature-list li {
+      color: #cfcfdf;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 1rem;
+    }
+
+    .feature-list li::before {
+      content: "✦";
+      color: #f3c26b;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+
+    .buy-area {
+      margin-top: auto;
+      text-align: center;
+    }
+
+    .buy-btn {
+      display: inline-block;
+      width: 100%;
+      background: linear-gradient(115deg, #3d3d4a, #2a2a33);
+      border: 1.5px solid;
+      border-image-slice: 1;
+      border-image-source: linear-gradient(115deg, #e4c580, #f9e281, #b58f4a);
+      padding: 1rem 0;
+      border-radius: 60px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fdebb3;
+      text-shadow: 0 2px 3px #00000040;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 8px 0 #1a1a22, 0 10px 20px rgba(0,0,0,0.4);
+      letter-spacing: 0.5px;
+    }
+
+    .buy-btn:hover {
+      background: linear-gradient(115deg, #4f4f60, #3a3a48);
+      color: #fff3ce;
+      border-image-source: linear-gradient(115deg, #f9d88b, #fddf9e, #dbaa54);
+      transform: scale(1.02);
+      box-shadow: 0 6px 0 #1a1a22, 0 15px 25px rgba(0,0,0,0.5);
+    }
+
+    .buy-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #1a1a22, 0 10px 20px rgba(0,0,0,0.4);
+    }
+
+    .gray-footnote {
+      text-align: center;
+      margin-top: 3rem;
+      color: #7f7f92;
+      font-size: 0.9rem;
+      border-top: 1px dashed #4a4a5a;
+      padding-top: 2rem;
+    }
+
+    .gray-footnote a {
+      color: #d4b26a;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .gray-footnote a:hover {
+      text-decoration: underline;
+      color: #f5d76e;
+    }
+
+    /* simulated payment console (for demonstration) */
+    .oxapay-debug {
+      background: #202028;
+      border-radius: 1.5rem;
+      padding: 1.2rem 1.8rem;
+      margin-top: 2rem;
+      border: 1px solid #5a5a6e;
+      color: #bcbcb0;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      box-shadow: inset 0 0 15px #0000005e;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .oxapay-debug strong {
+      color: #f3c26b;
+      font-weight: 600;
+    }
+
+    .merchant-badge {
+      background: #353540;
+      color: #dbbc78;
+      padding: 0.3rem 1.2rem;
+      border-radius: 100px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      border: 1px solid #7a6a40;
+      font-size: 0.8rem;
+    }
+  </style>
+  <!-- Load axios from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div class="main-container">
+    <!-- brand / header -->
+    <div class="brand">
+      <h1>PIKA</h1>
+      <span>⚡ fast · reliable · golden</span>
+    </div>
+
+    <!-- two options: monthly / lifetime -->
+    <div class="pricing-grid">
+      <!-- monthly card -->
+      <div class="plan-card" data-plan="monthly" data-amount="29" data-order="PIKA-M-001">
+        <div class="plan-header">
+          <div class="plan-name">Pika Injection Monthly</div>
+          <div class="plan-price">
+            <span class="price-amount">$29</span>
+            <span class="price-period">/ month</span>
+            <span class="price-note">USD</span>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <ul class="feature-list">
+          <li>30 days full access</li>
+          <li>Priority injection nodes</li>
+          <li>24/7 golden support</li>
+          <li>Cancel anytime</li>
+        </ul>
+        <div class="buy-area">
+          <button class="buy-btn" id="buyMonthly">buy now</button>
+        </div>
+      </div>
+
+      <!-- lifetime card -->
+      <div class="plan-card" data-plan="lifetime" data-amount="199" data-order="PIKA-L-999">
+        <div class="plan-header">
+          <div class="plan-name">Pika Injection Lifetime</div>
+          <div class="plan-price">
+            <span class="price-amount">$199</span>
+            <span class="price-period">one‑time</span>
+            <span class="price-note"></span>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <ul class="feature-list">
+          <li>Lifetime access</li>
+          <li>No recurring fees</li>
+          <li>Premium yellow/gray skin</li>
+          <li>Future updates included</li>
+        </ul>
+        <div class="buy-area">
+          <button class="buy-btn" id="buyLifetime">buy now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- oxapay demo / white label integration (shows request payload) -->
+    <div class="oxapay-debug">
+      <div class="merchant-badge">⚡ OxaPay white‑label · TRC20 (USDT)</div>
+      <strong>>_ payment request preview (simulated)</strong>
+      <pre id="oxapayPayload" style="margin-top: 0.6rem; color: #b2b2c0;">Click "buy now" to generate payment</pre>
+    </div>
+
+    <div class="gray-footnote">
+      ✦ secure payment via <a href="#" id="oxapayLink">OxaPay</a> (USDT – TRC20) ✦
+    </div>
+  </div>
+
+  <!-- ========== JavaScript (script.js) ========== -->
+  <script>
+    (function() {
+      // ----------------------------------------------
+      // script.js - OxaPay integration with golden theme
+      // ----------------------------------------------
+
+      // Configuration (in real scenario, keep api key on backend)
+      // For demo we use a placeholder; actual request would be proxied.
+      const MERCHANT_API_KEY = 'YOUR_MERCHANT_API_KEY';  // REPLACE with real key in production (backend)
+      
+      // Base OxaPay white label endpoint
+      const OXAPAY_URL = 'https://api.oxapay.com/v1/payment/white-label';
+
+      // Helper to format JSON nicely
+      function formatJSON(obj) {
+        return JSON.stringify(obj, null, 2);
+      }
+
+      // DOM elements
+      const buyMonthly = document.getElementById('buyMonthly');
+      const buyLifetime = document.getElementById('buyLifetime');
+      const payloadPre = document.getElementById('oxapayPayload');
+
+      // Shared function to update preview and call OxaPay
+      function triggerOxaPay(planType, amount, orderId) {
+        // Build the payload exactly as in the given example, with dynamic fields
+        const requestData = {
+          amount: amount,                        // dynamic amount (USD)
+          currency: "USD",
+          pay_currency: "TRX",                   // as per example
+          network: "TRC20",
+          lifetime: 60,                           // minutes
+          fee_paid_by_payer: 1,
+          under_paid_coverage: 20,
+          to_currency: "USDT",
+          auto_withdrawal: false,
+          order_id: orderId,                      // dynamic
+          description: `Pika ${planType} subscription` // dynamic description
+        };
+
+        // show in debug panel
+        payloadPre.innerText = 'Sending request to OxaPay ...\n' + 
+                               'Request payload:\n' + formatJSON(requestData, null, 2) + 
+                               '\n\n⏳ waiting for response (simulated) ...';
+
+        // Headers as required by OxaPay (merchant key)
+        const headers = {
+          'merchant_api_key': MERCHANT_API_KEY,
+          'Content-Type': 'application/json',
+        };
+
+        // ---- actual axios call (unmodified from the example structure) ----
+        // In this demo we also catch and display result.
+        // For demonstration we will also simulate a successful response to avoid CORS/network errors in static preview.
+        // But we keep the real call – if blocked by CORS, preview will show error.
+        // To keep demo smooth we wrap with a fallback simulation after 1.2s if real call fails.
+        
+        let realCallMade = false;
+
+        axios.post(OXAPAY_URL, requestData, { headers })
+          .then((response) => {
+            realCallMade = true;
+            const successMsg = '✅ OxaPay response:\n' + formatJSON(response.data);
+            payloadPre.innerText = successMsg;
+            console.log('OxaPay success', response.data);
+          })
+          .catch((error) => {
+            realCallMade = true;
+            let errorMsg = '❌ OxaPay error:\n';
+            if (error.response) {
+              errorMsg += formatJSON(error.response.data);
+            } else if (error.request) {
+              errorMsg += 'No response from server (CORS or network issue)';
+            } else {
+              errorMsg += error.message;
+            }
+            payloadPre.innerText = errorMsg;
+            console.error('OxaPay error', error);
+          })
+          .finally(() => {
+            // if we actually got a response, we keep it. otherwise maybe sim.
+          });
+
+        // Since this is a frontend demo and CORS will likely block (or you don't have real key),
+        // we show a simulated receipt after 1.5 seconds for better UX, only if no real response yet.
+        // we also don't want to overwrite if real response arrives earlier. We use setTimeout check.
+        setTimeout(() => {
+          // if payloadPre still contains 'Sending request' or waiting, simulate a success.
+          const currentText = payloadPre.innerText;
+          if (currentText.includes('Sending request') || currentText.includes('waiting for response')) {
+            const simulatedResponse = {
+              result: 100,
+              message: "success",
+              trackId: "TRX-" + Math.floor(Math.random()*1000000),
+              payment_url: "https://oxapay.com/pay/demo_golden",
+              amount: amount,
+              currency: "USD",
+              pay_currency: "TRX",
+              network: "TRC20",
+              order_id: orderId,
+              under_paid_coverage: 20,
+              fee_paid_by_payer: 1
+            };
+            payloadPre.innerText = '⚠️ Demo mode (simulated OxaPay response):\n' + 
+                                    formatJSON(simulatedResponse) +
+                                    '\n\n✨ In production, replace merchant key and handle on backend.';
+          }
+        }, 1500);
+      }
+
+      // Event listeners for buy buttons
+      buyMonthly.addEventListener('click', function(e) {
+        e.preventDefault();
+        triggerOxaPay('Monthly', 29, 'PIKA-MTH-' + Date.now());  // unique order id
+      });
+
+      buyLifetime.addEventListener('click', function(e) {
+        e.preventDefault();
+        triggerOxaPay('Lifetime', 199, 'PIKA-LT-' + Date.now());
+      });
+
+      // optional: update link (just for style)
+      document.getElementById('oxapayLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open('https://oxapay.com', '_blank');
+      });
+
+      // initial friendly message
+      payloadPre.innerText = '✨ Ready to pay. Click "buy now" under any plan.\n' +
+                             '   Request will use OxaPay white-label (TRC20).\n' +
+                             '   (Merchant key: ' + MERCHANT_API_KEY + ')';
+    })();
+  </script>
+  <!-- 
+    professional file structure respected:
+    - styles in <style> (can be moved to style.css)
+    - javascript in <script> (can be moved to script.js)
+    - html markup separated
+    theme: gold (#f9e281, #dbb05c), yellow (#ffd966, #f5d76e), gray (#2d2d38, #9191a3)
+    OxaPay integration with exact provided snippet logic.
+  -->
+</body>
+</html>

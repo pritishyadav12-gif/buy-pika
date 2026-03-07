@@ -3,157 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoldenAuth - Secure Login</title>
+    <title>Pika</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header Section -->
-        <header>
-            <nav>
-                <div class="logo">
-                    <i class="fas fa-crown" style="color: #FFD700;"></i>
-                    <span>Golden<span style="color: #FFD700;">Auth</span></span>
-                </div>
-                <div class="nav-links">
-                    <a href="#home" class="active">Home</a>
-                    <a href="#features">Features</a>
-                    <a href="#about">About</a>
-                </div>
-            </nav>
-        </header>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">PIKA</div>
+            <div class="nav-links">
+                <a href="#home" class="active">Home</a>
+                <a href="#webgui">WebGui</a>
+                <a href="#download">Download</a>
+            </div>
+        </div>
+    </nav>
 
-        <!-- Main Content -->
-        <main>
-            <div class="hero-section">
-                <h1>Welcome to <span style="color: #FFD700;">Golden</span> Security</h1>
-                <p>Experience premium authentication with our golden standard protection</p>
+    <!-- Home Page -->
+    <section id="home" class="page active-page">
+        <div class="container">
+            <!-- Hero Section with 2 Options -->
+            <div class="hero">
+                <h1>Why Should I choose Pika?</h1>
             </div>
 
-            <!-- Auth Container -->
-            <div class="auth-container">
-                <!-- Login Form -->
-                <div class="form-container login-form active-form">
-                    <h2><i class="fas fa-lock" style="color: #FFD700;"></i> Login</h2>
-                    <form id="loginForm">
-                        <div class="input-group">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="loginEmail" placeholder="Email" required>
-                        </div>
-                        <div class="input-group">
-                            <i class="fas fa-key"></i>
-                            <input type="password" id="loginPassword" placeholder="Password" required>
-                        </div>
-                        <div class="form-options">
-                            <label>
-                                <input type="checkbox"> Remember me
-                            </label>
-                            <a href="#" class="forgot-password">Forgot Password?</a>
-                        </div>
-                        <button type="submit" class="auth-btn">Login</button>
-                    </form>
-                    <p class="switch-form">
-                        Don't have an account? <a href="#" onclick="toggleForms()">Register here</a>
-                    </p>
+            <!-- Features Grid -->
+            <div class="features">
+                <!-- 1st -->
+                <div class="feature-card">
+                    <div class="feature-number">1</div>
+                    <h2>Undetected</h2>
+                    <p>Pika use the latest and most secure methods in their modules. Being detected isn't on our list of concerns.</p>
                 </div>
 
-                <!-- Register Form -->
-                <div class="form-container register-form">
-                    <h2><i class="fas fa-user-plus" style="color: #FFD700;"></i> Register</h2>
-                    <form id="registerForm">
-                        <div class="input-group">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="regName" placeholder="Full Name" required>
-                        </div>
-                        <div class="input-group">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="regEmail" placeholder="Email" required>
-                        </div>
-                        <div class="input-group">
-                            <i class="fas fa-key"></i>
-                            <input type="password" id="regPassword" placeholder="Password" required>
-                        </div>
-                        <div class="input-group">
-                            <i class="fas fa-key"></i>
-                            <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
-                        </div>
-                        <div class="form-options">
-                            <label>
-                                <input type="checkbox" required> I agree to the Terms & Conditions
-                            </label>
-                        </div>
-                        <button type="submit" class="auth-btn">Register</button>
-                    </form>
-                    <p class="switch-form">
-                        Already have an account? <a href="#" onclick="toggleForms()">Login here</a>
-                    </p>
+                <!-- 2nd -->
+                <div class="feature-card">
+                    <div class="feature-number">2</div>
+                    <h2>Screenshare Bypass</h2>
+                    <p>Pika guaranteed screenshare proof when following our screenshare guide.</p>
+                </div>
+
+                <!-- 3rd -->
+                <div class="feature-card">
+                    <div class="feature-number">3</div>
+                    <h2>Multi version</h2>
+                    <p>Multi version pika supports version 1.16.5-1.21.11</p>
+                </div>
+
+                <!-- 4th -->
+                <div class="feature-card">
+                    <div class="feature-number">4</div>
+                    <h2>Webgui</h2>
+                    <p>Pika have webgui instead of normal clickgui</p>
                 </div>
             </div>
 
-            <!-- Features Section -->
-            <div class="features-section" id="features">
-                <h2>Premium Features</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <i class="fas fa-shield-alt" style="color: #FFD700;"></i>
-                        <h3>Secure Authentication</h3>
-                        <p>Bank-level encryption for your data</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-bolt" style="color: #FFD700;"></i>
-                        <h3>Fast & Reliable</h3>
-                        <p>Lightning-fast login experience</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-mobile-alt" style="color: #FFD700;"></i>
-                        <h3>Mobile Friendly</h3>
-                        <p>Access from any device</p>
-                    </div>
+            <!-- Pricing Section -->
+            <div class="pricing">
+                <!-- Pika Monthly -->
+                <div class="pricing-card">
+                    <h3>Pika Monthly</h3>
+                    <div class="price">5 euro</div>
+                    <ul class="features-list">
+                        <li>Bypasses full manual screenshare including scanners</li>
+                        <li>Fileless execution & Injection</li>
+                        <li>supports all minecraft versions 1.16.5-1.21.11</li>
+                        <li>New instance bypass</li>
+                        <li>WebGui (nevergetcaught.xyz)</li>
+                        <li>Mainly for sword, pot and prob for mace</li>
+                    </ul>
+                </div>
+
+                <!-- Pika Lifetime -->
+                <div class="pricing-card featured">
+                    <h3>Pika Lifetime</h3>
+                    <div class="price">15 euro</div>
+                    <ul class="features-list">
+                        <li>Bypasses full manual screenshare including scanners</li>
+                        <li>Fileless execution & Injection</li>
+                        <li>supports all minecraft versions 1.8.9-1.21.11</li>
+                        <li>New instance bypass</li>
+                        <li>WebGui (nevergetcaught.xyz)</li>
+                        <li>Mainly for sword, pot and prob for mace</li>
+                    </ul>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Dashboard (Initially Hidden) -->
-            <div class="dashboard hidden" id="dashboard">
-                <div class="dashboard-header">
-                    <i class="fas fa-check-circle" style="color: #FFD700; font-size: 3rem;"></i>
-                    <h2>Welcome to Your Dashboard</h2>
-                    <p>You have successfully logged in!</p>
-                </div>
-                <div class="dashboard-content">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <i class="fas fa-users" style="color: #FFD700;"></i>
-                            <h3>Profile</h3>
-                            <p id="userName">User Name</p>
+    <!-- WebGui Page -->
+    <section id="webgui" class="page">
+        <div class="container">
+            <h1>WebGui</h1>
+            <div class="webgui-content">
+                <div class="webgui-card">
+                    <h2>nevergetcaught.xyz</h2>
+                    <p>Access your Pika WebGui through our secure web interface</p>
+                    <div class="webgui-features">
+                        <div class="webgui-feature">
+                            <span class="check">✓</span> Cloud-based configuration
                         </div>
-                        <div class="stat-card">
-                            <i class="fas fa-envelope" style="color: #FFD700;"></i>
-                            <h3>Email</h3>
-                            <p id="userEmail">user@example.com</p>
+                        <div class="webgui-feature">
+                            <span class="check">✓</span> Real-time settings sync
                         </div>
-                        <div class="stat-card">
-                            <i class="fas fa-calendar" style="color: #FFD700;"></i>
-                            <h3>Member Since</h3>
-                            <p id="memberSince">Just now</p>
+                        <div class="webgui-feature">
+                            <span class="check">✓</span> Remote module management
+                        </div>
+                        <div class="webgui-feature">
+                            <span class="check">✓</span> Profile sharing
                         </div>
                     </div>
-                    <button class="logout-btn" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
+                    <a href="#" class="webgui-btn">Access WebGui</a>
                 </div>
             </div>
-        </main>
+        </div>
+    </section>
 
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2024 GoldenAuth. All rights reserved.</p>
-        </footer>
-    </div>
+    <!-- Download Page -->
+    <section id="download" class="page">
+        <div class="container">
+            <h1>Download</h1>
+            <div class="download-options">
+                <div class="download-card">
+                    <h3>Pika Monthly</h3>
+                    <div class="download-price">€5/month</div>
+                    <ul>
+                        <li>✓ Latest modules</li>
+                        <li>✓ WebGui access</li>
+                        <li>✓ Updates included</li>
+                        <li>✓ Support 1.16.5-1.21.11</li>
+                    </ul>
+                    <button class="download-btn" onclick="showToast('Monthly version purchased!')">Purchase & Download</button>
+                </div>
+                <div class="download-card featured">
+                    <h3>Pika Lifetime</h3>
+                    <div class="download-price">€15 one-time</div>
+                    <ul>
+                        <li>✓ All monthly features</li>
+                        <li>✓ Lifetime updates</li>
+                        <li>✓ Priority support</li>
+                        <li>✓ Support 1.8.9-1.21.11</li>
+                    </ul>
+                    <button class="download-btn" onclick="showToast('Lifetime version purchased!')">Purchase & Download</button>
+                </div>
+            </div>
+            <div class="download-note">
+                <p>After purchase, you will receive download instructions via email.</p>
+            </div>
+        </div>
+    </section>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast"></div>
+    <!-- Simple Toast for notifications -->
+    <div id="toast" class="toast"></div>
 
     <script src="app.js"></script>
 </body>

@@ -3,16 +3,27 @@ class UserDatabase {
     constructor() {
         this.users = JSON.parse(localStorage.getItem('users')) || [];
         this.currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        
+        // Add demo user if not exists
+        if (!this.users.find(u => u.email === 'demo@example.com')) {
+            this.users.push({
+                id: 1,
+                name: 'Demo User',
+                email: 'demo@example.com',
+                password: this.hashPassword('demo123'),
+                createdAt: new Date().toISOString(),
+                plan: 'free'
+            });
+            localStorage.setItem('users', JSON.stringify(this.users));
+        }
     }
 
     register(userData) {
-        // Check if user exists
         const existingUser = this.users.find(u => u.email === userData.email);
         if (existingUser) {
             return { success: false, message: 'Email already registered!' };
         }
 
-        // Create new user
         const newUser = {
             id: Date.now(),
             name: userData.name,
@@ -73,76 +84,59 @@ class UserDatabase {
 const db = new UserDatabase();
 
 // DOM Elements
-const pages = document.querySelectorAll('.page');
-const navLinks = document.querySelectorAll('.nav-links a');
-const authModal = document.getElementById('authModal');
+const authContainer = document.getElementById('authContainer');
+const mainWebsite = document.getElementById('mainWebsite');
 const loginForm = document.getElementById('loginForm');
 const registerForm = document.getElementById('registerForm');
-const modalTitle = document.getElementById('modalTitle');
+const toggleBtns = document.querySelectorAll('.toggle-btn');
 const userProfile = document.getElementById('userProfile');
 const userNameDisplay = document.getElementById('userNameDisplay');
+const pages = document.querySelectorAll('.page');
+const navLinks = document.querySelectorAll('.nav-links a');
 const toast = document.getElementById('toast');
 const toastMessage = document.getElementById('toastMessage');
 
-// Check login status on load
+// Check if user is already logged in
 document.addEventListener('DOMContentLoaded', () => {
-    updateAuthUI();
-    
-    // Handle hash navigation
-    if (window.location.hash) {
-        const targetId = window.location.hash.substring(1);
-        switchPage(targetId);
+    if (db.isLoggedIn()) {
+        showMainWebsite();
+        updateUserInfo();
     }
-
-    // Initialize particles
     createParticles();
 });
 
-// Navigation
-function switchPage(pageId) {
-    pages.forEach(page => {
-        page.classList.remove('active-page');
-        if (page.id === pageId) {
-            page.classList.add('active-page');
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${pageId}`) {
-            link.classList.add('active');
-        }
-    });
+// Show/Hide Main Website
+function showMainWebsite() {
+    authContainer.style.display = 'none';
+    mainWebsite.classList.add('visible');
+    updateUserInfo();
 }
 
-// Auth Modal
-function showAuthModal(type) {
-    authModal.classList.add('show');
-    document.body.style.overflow = 'hidden';
-    
-    if (type === 'login') {
-        modalTitle.textContent = 'Login';
-        loginForm.classList.add('active-form');
-        registerForm.classList.remove('active-form');
-    } else {
-        modalTitle.textContent = 'Register';
-        registerForm.classList.add('active-form');
-        loginForm.classList.remove('active-form');
+function showAuth() {
+    authContainer.style.display = 'flex';
+    mainWebsite.classList.remove('visible');
+}
+
+// Update user info in navbar
+function updateUserInfo() {
+    if (db.isLoggedIn()) {
+        userNameDisplay.textContent = db.currentUser.name;
     }
 }
 
-function closeAuthModal() {
-    authModal.classList.remove('show');
-    document.body.style.overflow = 'auto';
-}
+// Toggle Auth Forms
+function showAuthForm(type) {
+    toggleBtns.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.toLowerCase() === type) {
+            btn.classList.add('active');
+        }
+    });
 
-function switchAuthModal(type) {
     if (type === 'login') {
-        modalTitle.textContent = 'Login';
         loginForm.classList.add('active-form');
         registerForm.classList.remove('active-form');
     } else {
-        modalTitle.textContent = 'Register';
         registerForm.classList.add('active-form');
         loginForm.classList.remove('active-form');
     }
@@ -164,8 +158,7 @@ function handleLogin(event) {
     
     if (result.success) {
         showToast(result.message, 'success');
-        closeAuthModal();
-        updateAuthUI();
+        showMainWebsite();
         document.getElementById('loginEmail').value = '';
         document.getElementById('loginPassword').value = '';
     } else {
@@ -201,7 +194,7 @@ function handleRegister(event) {
     
     if (result.success) {
         showToast(result.message, 'success');
-        switchAuthModal('login');
+        showAuthForm('login');
         document.getElementById('regName').value = '';
         document.getElementById('regEmail').value = '';
         document.getElementById('regPassword').value = '';
@@ -214,25 +207,40 @@ function handleRegister(event) {
 // Logout
 function logout() {
     db.logout();
-    updateAuthUI();
+    showAuth();
     showToast('Logged out successfully!', 'success');
 }
 
-// Update UI based on auth status
-function updateAuthUI() {
-    const loginBtn = document.querySelector('.login-btn');
-    const registerBtn = document.querySelector('.register-btn');
-    
-    if (db.isLoggedIn()) {
-        loginBtn.classList.add('hidden');
-        registerBtn.classList.add('hidden');
-        userProfile.classList.remove('hidden');
-        userNameDisplay.textContent = db.currentUser.name;
-    } else {
-        loginBtn.classList.remove('hidden');
-        registerBtn.classList.remove('hidden');
-        userProfile.classList.add('hidden');
-    }
+// Switch pages
+function switchPage(pageId) {
+    pages.forEach(page => {
+        page.classList.remove('active-page');
+        if (page.id === pageId) {
+            page.classList.add('active-page');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${pageId}`) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// Handle purchase
+function handlePurchase(plan) {
+    showToast(`Thank you for your interest in ${plan} plan! Payment gateway coming soon.`, 'success');
+}
+
+// Handle download
+function handleDownload(version) {
+    showToast(`Starting download for ${version} version...`, 'success');
+}
+
+// Forgot password
+function forgotPassword() {
+    showToast('Demo: Password reset link would be sent to your email!', 'info');
 }
 
 // Toast notification
@@ -245,45 +253,12 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
-// Handle Download
-function handleDownload(plan) {
-    if (!db.isLoggedIn()) {
-        showToast('Please login to download!', 'error');
-        showAuthModal('login');
-        return;
-    }
-    
-    showToast(`Starting download for ${plan} plan...`, 'success');
-    // Add actual download logic here
-}
-
-// Forgot password
-function forgotPassword() {
-    showToast('Password reset link sent to your email!', 'success');
-}
-
-// Mobile menu
-function toggleMobileMenu() {
-    const navLinks = document.querySelector('.nav-links');
-    const navAuth = document.querySelector('.nav-auth');
-    
-    if (navLinks.style.display === 'flex') {
-        navLinks.style.display = 'none';
-        navAuth.style.display = 'none';
-    } else {
-        navLinks.style.display = 'flex';
-        navLinks.style.flexDirection = 'column';
-        navAuth.style.display = 'flex';
-        navAuth.style.flexDirection = 'column';
-    }
-}
-
-// Particles animation
+// Create particles
 function createParticles() {
-    const particlesContainer = document.getElementById('particles');
+    const particlesContainer = document.querySelector('.hero-particles');
     if (!particlesContainer) return;
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 30; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.style.left = Math.random() * 100 + '%';
@@ -293,7 +268,7 @@ function createParticles() {
     }
 }
 
-// Add particles CSS dynamically
+// Add particles CSS
 const style = document.createElement('style');
 style.textContent = `
     .hero-particles {
@@ -335,57 +310,27 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+// Navigation click handlers
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
         e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        if (targetId && document.getElementById(targetId)) {
-            switchPage(targetId);
-        }
-    });
-});
-
-// Handle browser back/forward
-window.addEventListener('popstate', () => {
-    if (window.location.hash) {
-        const targetId = window.location.hash.substring(1);
+        const targetId = link.getAttribute('href').substring(1);
         switchPage(targetId);
-    }
-});
-
-// Input animations
-document.querySelectorAll('.input-group input').forEach(input => {
-    input.addEventListener('focus', function() {
-        this.parentElement.style.transform = 'scale(1.02)';
-    });
-    
-    input.addEventListener('blur', function() {
-        this.parentElement.style.transform = 'scale(1)';
     });
 });
 
 // Close modal with Escape key
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && authModal.classList.contains('show')) {
-        closeAuthModal();
-    }
-});
-
-// Click outside modal to close
-authModal.addEventListener('click', (e) => {
-    if (e.target === authModal) {
-        closeAuthModal();
+    if (e.key === 'Escape' && authContainer.style.display === 'flex') {
+        // Don't close, it's the main auth screen
     }
 });
 
 // Make functions globally available
-window.showAuthModal = showAuthModal;
-window.closeAuthModal = closeAuthModal;
-window.switchAuthModal = switchAuthModal;
+window.showAuthForm = showAuthForm;
 window.handleLogin = handleLogin;
 window.handleRegister = handleRegister;
 window.logout = logout;
-window.toggleMobileMenu = toggleMobileMenu;
+window.handlePurchase = handlePurchase;
 window.handleDownload = handleDownload;
 window.forgotPassword = forgotPassword;

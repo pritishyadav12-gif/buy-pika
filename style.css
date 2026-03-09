@@ -1,0 +1,921 @@
+@font-face {
+    font-family: 'Cummica';
+    src: local('Cummica'),
+    url('KOMIKAX_.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    color: rgba(239, 224, 255, 0.68);
+    line-height: 1.3;
+
+    background-color: #1a1a1a;
+    background-image: url("bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+.nav {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 24px;
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #d7d7d7;
+    font-size: 14px;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+}
+
+.btn.primary {
+    background: linear-gradient(90deg, #7c5cff, #5ac8ff);
+    color: #0b0b0d;
+    font-weight: 600;
+    border: none;
+}
+
+.wrap {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 40px 24px;
+    display: flex;
+    gap: 48px;
+}
+
+.left {
+    flex: 1;
+    min-width: 340px;
+    padding-top: 70px;
+}
+
+.right {
+    flex: 1.15;
+    min-width: 420px;
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.steve {
+    width: 500px;
+    height: 500px;
+
+    background-image: url("steve.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.notFound {
+    min-height: 100vh;
+    display: flex;
+    background-image: url("/404.png");
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+}
+
+.right {
+    flex: 1.15;
+    min-width: 420px;
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 56px;
+    line-height: 1.02;
+    margin-bottom: 18px;
+    color: #fff;
+}
+
+p.lead {
+    max-width: 560px;
+    margin-bottom: 28px;
+    color: #bdbdbd;
+}
+
+.update {
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 18px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+}
+
+.controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.icons {
+    display: flex;
+    gap: 14px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+}
+
+.icon {
+    width: auto;
+    min-width: fit-content;
+    height: 44px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    padding: 0 16px;
+    border: 1px solid transparent;
+
+    flex-shrink: 0;
+}
+
+.icon:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+    padding-left: 16px;
+}
+
+.icon-img {
+    width: 20px;
+    margin-right: 8px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    opacity: 1;
+}
+
+.icon:hover .icon-img {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.icon-text {
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    opacity: 1;
+}
+
+.icon:hover .icon-text {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.copy-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    color: #a0a0a0;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    opacity: 0;
+    white-space: nowrap;
+}
+
+.icon:hover .copy-text {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.copied-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 999px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+}
+
+.icon.copied .icon-img,
+.icon.copied .icon-text {
+    opacity: 0 !important;
+    transform: translateX(-10px) !important;
+}
+
+.icon.copied .copy-text {
+    opacity: 0 !important;
+    transform: translate(-50%, -50%) scale(0.8) !important;
+}
+
+.icon.copied .copied-indicator {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.icon.copied {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.4);
+}
+
+.checkmark {
+    color: #22c55e;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.copied-text {
+    color: #22c55e;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+@keyframes resetCopy {
+    0% {
+        background: rgba(34, 197, 94, 0.15);
+        border-color: rgba(34, 197, 94, 0.4);
+    }
+    100% {
+        background: rgba(255, 255, 255, 0.03);
+        border-color: transparent;
+    }
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    color: white;
+    display: flex;
+    padding: 22px 20px;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.arrow {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+}
+
+.dropdown.open .arrow {
+    transform: rotate(90deg);
+}
+
+.dropdown-menu {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    min-width: 120px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dropdown-menu li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.dropdown-menu li:hover::before {
+    left: 100%;
+}
+
+.dropdown-menu li:hover {
+    background: #2a2a2a;
+    transform: translateX(4px);
+}
+
+.dropdown.open .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.dropdown.open .dropdown-menu li {
+    animation: menuItemAppear 0.4s ease forwards;
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.dropdown.open .dropdown-menu li:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.dropdown.open .dropdown-menu li:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+@keyframes menuItemAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.version-text {
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.version-text.animating::before {
+    content: attr(data-old-version);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.version-text.animating {
+    animation: versionChange 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes versionChange {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    51% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.accent {
+    font-size: 40px;
+    color: #8e00ff;
+}
+
+.accent-2 {
+    font-size: 36px;
+    color: #6b02bd;
+}
+
+.accent-3 {
+    font-size: 14px;
+    color: #f64ca7;
+}
+
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 40px 0;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 20px;
+    animation: scroll 30s linear infinite;
+}
+
+.carousel-card {
+    min-width: 300px;
+    background: linear-gradient(135deg, rgba(8, 14, 35, 0.63), rgba(18, 8, 37, 0.68));
+    padding: 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.carousel-card:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.carousel-track:hover .carousel-card:not(:hover) {
+    opacity: 0.5;
+    transform: scale(0.95);
+}
+
+.carousel-track:hover {
+    animation-play-state: paused;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.name {
+    font-family: 'Cummica', Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    font-weight: bold;
+    font-size: 16px;
+    color: #9f65fa;
+}
+
+.card-text {
+    color: #cbd5e1;
+    font-size: 14px;
+    text-align: left;
+    line-height: 1.4;
+    margin: 0;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-300px * 4 - 20px * 4));
+    }
+}
+
+.reviews-section {
+    width: 100%;
+    text-align: center;
+    margin-top: 80px;
+    padding: 40px 0;
+}
+
+.reviews-title {
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+.divider-line {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.line-fade {
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.1) 20%,
+            rgba(255, 255, 255, 0.3) 50%,
+            rgba(255, 255, 255, 0.1) 80%,
+            transparent 100%
+    );
+}
+
+.reviews-container {
+    margin-top: 60px;
+}
+
+.pvp-types {
+    width: 100%;
+    text-align: center;
+    margin-top: 80px;
+    padding: 40px 0;
+}
+
+.pvp-title {
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 60px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+.pvp-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.pvp-card {
+    width: 280px;
+    background: linear-gradient(135deg, rgba(8, 14, 35, 0.63), rgba(18, 8, 37, 0.68));
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.pvp-image {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px 16px 0 0;
+}
+
+.pvp-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.4s ease;
+}
+
+.static-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 1;
+}
+
+/*
+.gif-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: scale(1.1);
+}
+ */
+
+.gif-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gif-img.loaded {
+    opacity: 1;
+}
+
+video.gif-img {
+    display: block;
+    max-width: 100%;
+}
+
+.pvp-info {
+    padding: 20px;
+    text-align: left;
+}
+
+.pvp-name {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+.pvp-subtitle {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    margin: 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+.pvp-container:hover .pvp-card:not(:hover) {
+    opacity: 0.4;
+    transform: scale(0.95);
+}
+
+.pvp-card:hover {
+    transform: scale(1.1);
+    z-index: 10;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.pvp-card:hover .static-img {
+    opacity: 0;
+    transform: scale(1.1);
+}
+
+.pvp-card:hover .gif-img {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.pvp-card,
+.pvp-image img,
+.pvp-info {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@media (max-width: 968px) {
+    .pvp-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .pvp-card {
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+.discord-section {
+    width: 100%;
+    padding: 80px 0;
+    margin-top: 80px;
+}
+
+.discord-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.discord-content {
+    flex: 1;
+    text-align: left;
+}
+
+.discord-logo {
+    margin-bottom: 30px;
+}
+
+.discord-title {
+    color: white;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+.discord-description {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+.download-btn {
+    background: #5865F2;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+.download-btn:hover {
+    background: #4752c4;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(88, 101, 242, 0.3);
+}
+
+.discord-btn {
+    background: #5865F2;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+.discord-btn:hover {
+    background: #4752c4;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(88, 101, 242, 0.3);
+}
+
+.discord-screenshot {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.macos-window {
+    width: 100%;
+    max-width: 500px;
+    background: #2b2b2b;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.macos-window:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+}
+
+.macos-header {
+    background: #3a3a3a;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #404040;
+}
+
+.macos-buttons {
+    display: flex;
+    gap: 8px;
+    margin-right: 15px;
+}
+
+.macos-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: block;
+}
+
+.macos-btn.close {
+    background: #ff5f57;
+}
+
+.macos-btn.minimize {
+    background: #ffbd2e;
+}
+
+.macos-btn.maximize {
+    background: #28ca42;
+}
+
+.macos-title {
+    color: #b0b0b0;
+    font-size: 0.8rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.macos-content {
+    padding: 0;
+}
+
+.screenshot-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0 0 12px 12px;
+}
+
+.dsc-title {
+    color: #ffffff;
+    align-self: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 60px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+.site-footer {
+    background: rgba(12, 19, 34, 0.63);
+    border-top: 1px solid rgba(23, 31, 44, 0.75);
+    padding: 30px 0;
+    margin-top: 40px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-text p {
+    color: #94a3b8;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    text-align: center;
+    margin: 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+@media (max-width: 968px) {
+    .discord-container {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .discord-content {
+        text-align: center;
+    }
+
+    .macos-window {
+        max-width: 100%;
+    }
+
+    .discord-title {
+        font-size: 1.8rem;
+    }
+
+    .discord-description {
+        font-size: 1rem;
+    }
+}
